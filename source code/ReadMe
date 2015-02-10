@@ -1,0 +1,36 @@
+Move the ronak folder on the root directory of the BOSH_CLI VM.
+
+Controllers IP ---------- 9.114.96.250
+Compute IP -------------- 9.114.96.150
+
+Before proceeding to use the script, pls remove the controllers and compute ip with your controller and compute ip respectively.
+
+After removing the controllers and compute IP with your environment IPs, you need to configure certain properties of microbosh VM installation.
+1. echo "<microbosh_vm_ip> 10.241.0.3" >> key.txt
+2. echo -e "admin\nadmin\n" |  bosh target https://10.241.0.3:25555 
+   In this line , replace 10.241.0.3 with the static IP of the microbosh VM which you have freely available in your network allocation pool.
+
+
+After this you come to the installation of different components of CF.
+Configure this section of demo.yml
+subnets:
+      - name: Subnet_1
+        range: 10.241.0.0/22
+        gateway: 10.241.0.1
+        static:
+          - 10.241.0.4 - 10.241.0.254
+
+
+1. echo "<nats_static_ip> 9.114.98.xxx" >> temp.txt
+2. echo "<postgres_static_ip> 9.114.98.xxx" >> temp.txt
+3. echo "<router_ip_address> 9.114.98.xxx" >> temp.txt
+
+Replace the above 3 lines with the 3 floating IP addresses available in your pool. They should not be bound to any VMs.
+
+After this you come to the installation of pushing an app to the CF.
+1. cf target http://api.9.114.98.169.xip.io --trace
+Replace this with the IP assigned to router in the CF installation.
+
+
+
+

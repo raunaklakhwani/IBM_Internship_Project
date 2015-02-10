@@ -1,0 +1,37 @@
+                name: <vm_name>
+
+                logging:
+                  level: DEBUG
+
+                network:
+                  type: manual
+                  ip: <microbosh_vm_ip>
+                  cloud_properties:
+                   net_id: <net_id>
+
+                resources:
+                  persistent_disk: 16384
+                  cloud_properties:
+                    instance_type: <instance_type>
+
+                cloud:
+                  plugin: openstack
+                  properties:
+                    openstack:
+                      auth_url: <auth_url>
+                      username: <username>
+                      api_key: <api_key>
+                      tenant: <tenant>
+                      default_security_groups: ["default"]
+                      default_key_name: <default_key_name>
+                      private_key: /root/.ssh/id_rsa
+
+                apply_spec:
+                  properties:
+                    director:
+                      max_threads: 3
+                    hm:
+                      resurrector_enabled: true
+                    ntp:
+                      - 0.north-america.pool.ntp.org
+                      - 1.north-america.pool.ntp.org
